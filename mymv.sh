@@ -27,7 +27,7 @@ move_file() {
   echo "Moved $1 to $2."
 }
 function main {
-    move_file
+    move_file $1 $2
 }
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
     main "$@"
