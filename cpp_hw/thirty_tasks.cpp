@@ -1,13 +1,27 @@
 #include <iostream>
+#include <string>
+#include <cstring>
 #include <cmath>
 void draw_rect(int, int);
 void draw_rtriangle(int);
-
+std::string longest_symb(std::string str);
+std::string change_case(std::string str);
+int find(char* str, char* substr);
+bool is_substr(char* str, char* substr);
+std::string replace_a(std::string str)
 int main()
 {
-    int a = 6, b =4;
-    draw_rect(6,4);
-    draw_rtriangle(5);
+    //int a = 6, b =4;
+    //draw_rect(6,4);
+    //draw_rtriangle(5);
+    //std::string str = "helloyy worlxxxd";
+    char nstr[] = "complicated";
+    char substr[] = "ct";
+    //std::cout<<longest_symb(str)<<std::endl;
+    //std::cout<<find(nstr, substr)<<std::endl;
+    std::string str = "AbCd";
+    std::cout<<change_case(str)<<std::endl;
+    std::cout<<is_substr(nstr,substr)<<std::endl;
 }
 int dig_sum(int num)
 {//task 1
@@ -109,6 +123,132 @@ void draw_rtriangle(int n)
         std::cout<<std::endl;
     }
 }
+
+void Guess_num()
+{//Task 10
+    srand(time(NULL));
+    int number = rand() % 100 + 1;
+    int num_guesses = 0;
+
+    while (true) {
+        std::cout << "Guess a number between 1 and 100: ";
+        int guess;
+        std::cin >> guess;
+        num_guesses++;
+        if (guess > number) {
+            std::cout << "Too high!\n";
+        } else if (guess < number) {
+            std::cout << "Too low!\n";
+        } else {
+            break;
+        }
+    }
+
+    std::cout << "Congratulations! You guessed the right number in " << num_guesses << " guesses!\n";
+}
+
+std::string longest_symb(std::string str)
+{// task 30
+    std::string max = "";
+    std::string temp = "";
+    int len = str.size();
+    for(int i = 0; i < len; i++)
+    {
+        if(str[i]==str[i+1]) temp += str[i];
+        else temp = "";
+        if(max.size() < temp.size()) max = temp;            
+    }
+    max += max[0];
+    return max;
+}
+
+int find(char* str, char* substr)
+{//task 31
+    size_t len = strlen(str);
+    size_t sub_len = strlen(substr);
+    for(int i = 0; i < len; i++)
+    {
+        int temp = 0;
+        for(int j = 0; j < sub_len; j++)
+        {
+            if(str[i+j] == substr[j]) temp++;
+            else break;
+        }
+        if(temp == sub_len) return i;
+    }
+    return -1;
+}
+
+std::string change_case(std::string str)
+{//task 32.1
+    std::string res = "";
+    for(int i = 0; i < str.size(); i++)
+    {
+        if(str[i] >= 65 && str[i] <= 90)
+        {
+            res += str[i] + 32; 
+        }
+        if(str[i] >= 97 && str[i] <= 122)
+        {
+            res += str[i] - 32;     
+        } 
+    }
+    return res;
+}
+
+
+bool is_anagram(std::string str)
+{// task 32.2
+    int len = str.size();
+    std::string rev_str = "";
+    for(int i = len-1; i >= 0; i--)
+    {
+        rev_str += str[i];
+    }
+    return rev_str == str;
+}
+
+bool is_substr(char* str, char* substr)
+{//task 33
+    if(find(str, substr) == -1)
+    {
+        return false;
+    }else
+    {
+        return true;
+    }
+}
+
+std::string replace_a(std::string str)
+{//task 34
+    std::string res = "";
+    for(int i = 0; i < str.size(); i++)
+    {
+        res += str[i];
+        if(str[i] == 'a')
+        {
+            res += 'b';
+        }
+    }
+    return res;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
