@@ -2,15 +2,63 @@
 #include "insertion_sort.cpp"
 class Human
 {
-public:
     std::string name;
     std::string surname;
     int age;
+public:
+//Constructors    
+    Human()
+    {
+        name = "";
+        surname = "";
+        age = 0;
+    }
     Human(std::string n, std::string s, int a)
     {
         this->name = n;
         this->surname = s;
         this->age = a;
+    }
+
+//Overloaded Operators
+    friend std::ostream& operator<<(std::ostream& os, const Human& h)
+    {
+        os<<h.name<<" "<<h.surname<<" "<<h.age;
+        return os;
+    }
+
+    bool operator>(const Human& other)
+    {
+        return this->age > other.age;
+    }
+    bool operator<(const Human& other)
+    {
+        return this->age < other.age;
+    }
+//Getters and Setters
+    void set_age(int value)
+    {
+        age = value;
+    }
+    void set_name(std::string value)
+    {
+        name = value;
+    }
+    void set_surname(std::string value)
+    {
+        surname = value;
+    }
+    int get_age()
+    {
+        return age;
+    }
+    std::string get_name()
+    {
+        return name;
+    }
+    std::string get_surname()
+    {
+        return surname;
     }
 };
 
@@ -22,7 +70,7 @@ int main()
     {
         Human temp = arr[i];
         int j = i - 1;
-        while(j >= 0 && arr[j].age > temp.age)
+        while(j >= 0 && arr[j] > temp)
         {
             arr[j+1] = arr[j];
             j--;
@@ -31,6 +79,6 @@ int main()
     }
     for(int i = 0; i < 4;i++)
     {
-        std::cout<<arr[i].name<<" "<<arr[i].surname<<" "<<arr[i].age<<std::endl;
+        std::cout<<arr[i]<<std::endl;
     }
 }
