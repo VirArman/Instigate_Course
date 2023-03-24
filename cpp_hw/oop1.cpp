@@ -1,23 +1,25 @@
 #include <iostream>
-#include "insertion_sort.cpp"
 class Human
 {
     std::string name;
     std::string surname;
     int age;
 public:
+    static int count;
 //Constructors    
     Human()
     {
         name = "";
         surname = "";
         age = 0;
+        count++;
     }
     Human(std::string n, std::string s, int a)
     {
         this->name = n;
         this->surname = s;
-        this->age = a;
+        this->age = a;;
+        count++;
     }
 
 //Overloaded Operators
@@ -62,11 +64,13 @@ public:
     }
 };
 
+int Human::count = 0;
+
 int main()
 {
     Human arr[] = {Human("John","Smith",16),Human("Andrew","Brown", 25),Human("John","Snow",32),Human("Mark","Hammel",18)};
-    
-    for(int i = 0; i < 4; i++)
+    int count = Human::count;
+    for(int i = 0; i < count; i++)
     {
         Human temp = arr[i];
         int j = i - 1;
@@ -77,7 +81,7 @@ int main()
         }
         arr[j+1] = temp;
     }
-    for(int i = 0; i < 4;i++)
+    for(int i = 0; i < count;i++)
     {
         std::cout<<arr[i]<<std::endl;
     }
