@@ -5,19 +5,38 @@
 #include "thirty_tasks.h"
 int main()
 {
-    //int a = 6, b =4;
-    //draw_rect(6,4);
-    //draw_rtriangle(5);
-    //std::string str = "helloyy worlxxxd";
-    //char nstr[] = "complicated";
-    //char substr[] = "ct";
-    //std::cout<<longest_symb(str)<<std::endl;
-    //std::cout<<find(nstr, substr)<<std::endl;
-    //std::string str = "AbCd";
-    //std::cout<<change_case(str)<<std::endl;
-    //std::cout<<is_substr(nstr,substr)<<std::endl;
+    int a;
+    bool flag  = true;
+    std::cin.exceptions(std::istream::failbit);
+    do {
+        try {
+            std::cout << "PLEASE INSERT NUMBER:" << std::endl;
+            std::cin >> a;
+            flag = true;
+        }
+        catch (std::ios_base::failure &fail) {
+            flag = false;
+            std::cout << "PLEASE INSERT A VALID NUMBER." << std::endl;
+            std::cin.clear();
+            std::string tmp;
+            getline(std::cin, tmp);
+        }
+    } while (flag == false);
+    std::cout<<"The sum of digits is "<<dig_sum(a)<<std::endl;       
+    std::cout<<"The inversed num is "<<inverse_num(a)<<std::endl;
+
+    int* arr = new int[] {12,13,15,65,84};
+    for(int i = 0; i < 5; i++)
+        std::cout<<arr[i]<<" ";
+
+    std::cout<<std::endl;
+    arr = del_el(arr,5,3);
     
-    std::cout<<change_num_sys(1234,8)<<std::endl;
+    for(int i = 0; i < 4; i++)
+        std::cout<<arr[i]<<" ";
+
+    delete [] arr;
+    std::cout<<std::endl;
 }
 int dig_sum(int num)
 {//task 1
@@ -357,7 +376,41 @@ void sort()
     }
     std::cout << std::endl;
 }
-
+int* del_el(int* arr, int len, int n)
+{//task 23
+    int size = len - 1;
+    int* narr = new int[size];
+    bool f = false;
+    for(int i = 0; i < len; i++)
+    {
+        if(i == n-1)
+        {
+            f = true;
+            continue;
+        }
+        if(f)
+            narr[i-1] = arr[i];
+        else
+            narr[i] = arr[i];
+    }
+    return narr;
+}
+int* add_el(int* arr, int len,int k, int n)
+{//task 24
+    int size = len + 1;
+    int* narr = new int[size];
+    bool f = false;
+    for(int i = 0; i < size; i++)
+    {
+        if(i == n-1)
+        {
+            narr[i] = k;
+            continue;
+        }
+        narr[i] = arr[i];
+    }
+    return narr;
+}
 bool is_degree(int k, int n)
 {//task 27.1
     bool res = false;
@@ -503,7 +556,7 @@ std::string replace_a(std::string str)
 
 
 void delete_duplicates(std::string sentence)
-{	
+{//task 35
 	std::string str;
 	std::cout << "Enter a sentence:" << std::endl;
 	getline(std::cin, str);

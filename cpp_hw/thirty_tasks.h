@@ -42,7 +42,9 @@ void is_sorted();
 //task22
 void sort();
 //task23
+int* add_el(int* arr, int len,int k, int n);
 //task24
+int* del_el(int* arr, int len, int n);
 //task25
 //task26
 //task27
