@@ -8,8 +8,26 @@ int getting_digits(std::string line);
 
 int main(int argc, char* argv[])
 {
-    //checking the existance of testing flag
-    if(argv[1][0] == '-' && argv[1][1] == 't')
+    if(argv[1] == NULL)
+    {//user mod
+        try
+        {
+            std::cout << "Insert number " << "\n";
+            std::string line = "";
+            std::cin >> line;
+            int num = 0;
+            if(isfloating(line))
+                throw 1;
+            num = getting_digits(line);
+            std::cout << digit_sum(num) << "\n";
+        }
+        catch(int err)
+        {
+            if(err == 1)
+                std::cout << "The program works only with integers" << "\n";
+        }
+    }//checking the existance of testing flag
+    else if(argv[1][0] == '-' && argv[1][1] == 't')
     {//testing mod
         std::string input = argv[2];
         std::string output = argv[3];
@@ -18,7 +36,7 @@ int main(int argc, char* argv[])
         int num;
         std::string line;
         while (getline (input_file, line)) 
-        {//Reading from file 
+        {//Reading from file and writeing results in output file 
             try
             {
                 if(isfloating(line))
@@ -35,8 +53,9 @@ int main(int argc, char* argv[])
         output_file.close();
         input_file.close();
     }else
-    {//user mod
-        //work in progress
+    {
+        std::cout << "Entered flag does not exist " << "\n";
+        std::cout << "You need to enter -t and name of input and output files " << "\n";        
     }
     return 0;
 }
