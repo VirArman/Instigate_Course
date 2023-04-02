@@ -8,6 +8,6 @@ The program works only with integers
 13
 2
 3
-4
-4
-15
+The line must contain only digits
+The line must contain only digits
+The line must contain only digits
