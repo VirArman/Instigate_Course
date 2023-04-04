@@ -11,6 +11,13 @@ class Arr {
             size = s;
             arr = new int[size];
         }
+        Arr(int s, int a[]){
+            size = s;
+            arr = new int[size];
+            for(int i = 0; i < size; i++){
+                arr[i] = a[i];
+            }
+        }
         int& operator[](int index){
             if (index >= size) {
                 std::cout << "Array index out of bound, exiting";
@@ -86,12 +93,18 @@ class Arr {
             }
             std::cout<<std::endl;
         }
+        ~Arr(){
+            delete [] arr;
+        }
 };
 int main()
 {
 
     Arr a;
-    //a.print();
+    int ba[] = {1,3,46};
+    Arr b(3,ba);
+    b.print();
+    a.print();
     a.push(13);
     a.push(21);
     a.insert(56,0);
