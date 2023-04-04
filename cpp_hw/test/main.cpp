@@ -28,7 +28,7 @@ int main(int argc, char* argv[])
                 std::cout << "The program works only with integers" << "\n";
         }
     }//checking the existance of testing flag
-    else if(argv[1][0] == '-' && argv[1][1] == 't')
+    else if(std::string(argv[1]) == "-t")
     {//testing mod
         std::ofstream output_file(argv[3]);
         output_file.clear();

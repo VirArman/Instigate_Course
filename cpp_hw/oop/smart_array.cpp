@@ -1,118 +1,127 @@
 #include <iostream>
 class Arr {
     private:
-        int* arr = nullptr;
-        int size = 0;
+        int* m_arr = nullptr;
+        int m_size = 0;
+        int m_capacity = 4;
+
+        int* copy()
+        {
+            m_capacity = m_size * 1.5;
+            int* narr = new int[m_capacity]{0};
+            for (int i = 0; i < m_size; i++){
+                narr[i] = m_arr[i];  
+            }
+            delete [] m_arr;
+            return narr;
+        }
+
     public:
         Arr(){
-            arr = new int[size];
+            m_arr = new int[m_capacity]{0};
         }
         Arr(int s){
-            size = s;
-            arr = new int[size];
-        }
-        Arr(int s, int a[]){
-            size = s;
-            arr = new int[size];
-            for(int i = 0; i < size; i++){
-                arr[i] = a[i];
+            try{
+                if(s <= 0){
+                    throw 2;
+                }
+                m_size = s;
+                m_capacity = m_size * 1.5;
+                m_arr = new int[m_capacity]{0};
+            }catch(int err){
+                if(err == 2){
+                    std::cout<<"The size must be bigger than 0"<<"\n";
+                }
             }
         }
+        Arr(int s, int a[]){
+            try{
+                if(s <= 0){
+                    throw 2;
+                }
+                m_size = s;
+                m_capacity = m_size * 1.5;
+                m_arr = new int[m_capacity]{0};
+                for(int i = 0; i < m_size; i++){
+                    m_arr[i] = a[i];
+                }
+            }catch(int err){
+                if(err == 2){
+                    std::cout<<"The size must be bigger than 0"<<"\n";
+                }
+            }
+        }        
+        ~Arr(){
+            delete [] m_arr;
+        }
         int& operator[](int index){
-            if (index >= size) {
-                std::cout << "Array index out of bound, exiting";
-                exit(1);
-            }   
-            return arr[index];
+            try{
+                if (index < 0 || index >= m_size) {
+                    throw 1;
+                }   
+                return m_arr[index];
+            }catch(int err)
+            {
+                if(err == 1){
+                    std::cout << "Array index out of bound"<<"\n";
+                }
+            }
         }
         int len()
         {
-            return size;
+            return m_size;
         }
         void push(int num){
-            //adds number at the end of array
-            size++;
-            int* narr = new int[size];
-            for(int i = 0; i < size; i++){
-                narr[i] = arr[i];
+            //adds number at the end of Array
+            m_size++;
+            if(m_size == m_capacity){
+                m_arr = copy();
             }
-            narr[size-1] = num;
-            delete [] arr;
-            arr = narr;
+            m_arr[m_size-1] = num;
         }
-        void insert(int num, int index){
+        void insert(int num, int index){//Bug in case of inserting at the end of array
             //adds number at the specefic index
-            if (index >= size) {
-                std::cout << "Array index out of bound, exiting"<<"\n";
-                exit(1);
-            }
-            size++;
-            int* narr = new int[size];
-            bool f = false;
-            for(int i = 0; i < size; i++){
-                if(i == index)
-                {
-                    f = true;
-                    narr[i] = num;
+            try{
+                if (index < 0 || index >= m_size) {
+                    throw 1;
                 }
-                if(f)
-                    narr[i+1] = arr[i];
-                else
-                    narr[i] = arr[i];
+                m_size++;
+                if(m_capacity == m_size){
+                    m_arr = copy();
+                }
+                for(int i = m_size; i >= index; i--){
+                    m_arr[i+1] = m_arr[i];
+                }
+                m_arr[index] = num;
+            }catch(int err){
+                if(err == 1){
+                    std::cout << "Array index out of bound"<<"\n";
+                }
             }
-            delete [] arr;
-            arr = narr;
         }
         void del(int index){
-            // deletes array memeber from chosen index
-            if (index >= size) {
-                std::cout << "Array index out of bound, exiting";
-                exit(1);
-            }
-            int* narr = new int[size-1];
-            bool f = false;
-            for(int i = 0; i < size; i++)
-            {
-                if(i == index)
-                {
-                    f = true;
-                    continue;
+            // deletes m_array memeber from chosen index
+            try{
+                if (index < 0 || index >= m_size) {
+                    throw 1;
+                } 
+                for(int i = index; i < m_size; i++){
+                    m_arr[i] = m_arr[i+1];
                 }
-                if(f)
-                    narr[i-1] = arr[i];
-                else
-                    narr[i] = arr[i];
+            m_size--;  
+            }catch(int err)
+            {
+                if(err == 1){
+                    std::cout << "Array index out of bound"<<"\n";
+                }
             }
-            size--;
-            delete [] arr;
-            arr = narr;
+            
         }
         void print(){
-             for(int i = 0; i < size; i++){
-                std::cout<<arr[i]<<" ";
+             for(int i = 0; i < m_size; i++){
+                std::cout<<m_arr[i]<<" ";
             }
             std::cout<<std::endl;
         }
-        ~Arr(){
-            delete [] arr;
-        }
-};
-int main()
-{
 
-    Arr a;
-    int ba[] = {1,3,46};
-    Arr b(3,ba);
-    b.print();
-    a.print();
-    a.push(13);
-    a.push(21);
-    a.insert(56,0);
-    a.push(36);
-    a.insert(6,1);
-    a.print();
-    a.del(1);
-    a.push(5);
-    a.print();
-    return 0;    
-}
+};
