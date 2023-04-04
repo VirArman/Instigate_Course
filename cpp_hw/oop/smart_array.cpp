@@ -2,7 +2,7 @@
 class Arr {
     private:
         int* arr = nullptr;
-        int size = 4;
+        int size = 0;
     public:
         Arr(){
             arr = new int[size];
@@ -20,16 +20,39 @@ class Arr {
         }
         int len()
         {
-            return this->size;
+            return size;
         }
         void push(int num){
             //adds number at the end of array
-            int* narr = new int[size+1];
+            size++;
+            int* narr = new int[size];
             for(int i = 0; i < size; i++){
                 narr[i] = arr[i];
             }
-            narr[size] = num;
+            narr[size-1] = num;
+            delete [] arr;
+            arr = narr;
+        }
+        void insert(int num, int index){
+            //adds number at the specefic index
+            if (index >= size) {
+                std::cout << "Array index out of bound, exiting"<<"\n";
+                exit(1);
+            }
             size++;
+            int* narr = new int[size];
+            bool f = false;
+            for(int i = 0; i < size; i++){
+                if(i == index)
+                {
+                    f = true;
+                    narr[i] = num;
+                }
+                if(f)
+                    narr[i+1] = arr[i];
+                else
+                    narr[i] = arr[i];
+            }
             delete [] arr;
             arr = narr;
         }
@@ -66,16 +89,17 @@ class Arr {
 };
 int main()
 {
-    Arr a(5);
-    for(int i = 0; i < a.len(); i++){
-        a[i] = i+1;
-    }
+
+    Arr a;
     //a.print();
-    a.push(8);
+    a.push(13);
+    a.push(21);
+    a.insert(56,0);
+    a.push(36);
+    a.insert(6,1);
     a.print();
-    a.del(5);
-    a.print();    
-    a.del(2);
+    a.del(1);
+    a.push(5);
     a.print();
     return 0;    
 }
