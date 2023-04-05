@@ -1,19 +1,22 @@
-class Arr {
+class Array {
     private:
+        //represents our array
         int* m_arr;
+        //user visible size
         int m_size;
+        //actual size of array
         int m_capacity;
         //changes capacity of array
         int* change_capacity();
     public:
         //Constructor without argument
-        Arr();
+        Array();
         //Constructor with size argument
-        Arr(int s);
+        Array(int s);
         //Constructor with size and array argument
-        Arr(int s, int a[]);
+        Array(int s, int a[]);
         //Destructor
-        ~Arr();
+        ~Array();
         //[] operator overloading
         int& operator[](int index);
         //returns size
