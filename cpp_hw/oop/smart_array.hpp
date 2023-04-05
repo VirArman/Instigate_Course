@@ -1,8 +1,8 @@
 class Arr {
     private:
-        int* m_arr = nullptr;
-        int m_size = 0;
-        int m_capacity = 4;
+        int* m_arr;
+        int m_size;
+        int m_capacity;
         //changes capacity of array
         int* change_capacity();
     public:
@@ -17,7 +17,7 @@ class Arr {
         //[] operator overloading
         int& operator[](int index);
         //returns size
-        int len();
+        int get_size();
         //pushes value at the end of array
         void push(int num);
         //adds value in specefic index

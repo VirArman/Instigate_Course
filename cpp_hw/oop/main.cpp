@@ -6,9 +6,9 @@ int main(){
         a.push(i);
     }
     a.print();
-    std::cout<< a.len() << "\n";
-    a.insert(13,a.len());
+    std::cout<< a.get_size() << "\n";
+    a.insert(13,a.get_size());
     a.print(); 
-    std::cout<< a.len() << "\n";
+    std::cout<< a.get_size() << "\n";
     return 0;
 }
