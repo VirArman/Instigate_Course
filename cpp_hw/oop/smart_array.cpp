@@ -79,18 +79,18 @@ class Arr {
             }
             m_arr[m_size-1] = num;
         }
-        void insert(int num, int index){//Bug in case of inserting at the end of array
+        void insert(int num, int index){
             //adds number at the specefic index
             try{
-                if (index < 0 || index >= m_size) {
+                if (index < 0 || index > m_size) {
                     throw 1;
                 }
                 m_size++;
                 if(m_capacity == m_size){
                     m_arr = copy();
                 }
-                for(int i = m_size; i >= index; i--){
-                    m_arr[i+1] = m_arr[i];
+                for(int i = m_size+1; i >= index; i--){
+                    m_arr[i] = m_arr[i-1];
                 }
                 m_arr[index] = num;
             }catch(int err){
