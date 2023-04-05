@@ -1,9 +1,9 @@
 class Arr {
     private:
-        int* m_arr;
-        int m_size;
-        int m_capacity;
-        int* copy();
+        int* m_arr = nullptr;
+        int m_size = 0;
+        int m_capacity = 4;
+        int* change_capacity();
     public:
         Arr();
         Arr(int s);

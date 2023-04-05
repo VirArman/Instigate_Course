@@ -1,5 +1,5 @@
 #include <iostream>
-#include "smart_array.cpp"
+#include "smart_array.hpp"
 int main(){
     Arr a;
     for(int i = 1; i < 10; i++){
