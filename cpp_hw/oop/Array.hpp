@@ -13,16 +13,19 @@ class Array {
         Array();
         //Constructor with size argument
         Array(int s);
-        //Constructor with size and array argument
+        //Copy constructor that copies array element by element
         Array(const Array &other);
         //Destructor
         ~Array();
+        //Checks equality of two arrays by comparing element by element and by size
         bool operator==(const Array& other);
+        //Checks inequality of two arrays by comparing element by element and by size
         bool operator!=(const Array& other);
+        //Assignes array element by element
         Array& operator=(const Array& other);
-        //[] operator overloading
+        //[] operator overloading, get elemen of array by specefied index
         int& operator[](int index);
-        //returns size
+        //returns visible size of array
         int get_size();
         //pushes value at the end of array
         void push(int num);
