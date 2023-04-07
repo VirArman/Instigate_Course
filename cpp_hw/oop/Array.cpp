@@ -84,7 +84,7 @@ Array& Array::operator=(const Array& other){
     // check for self-assignment
     if (this != &other){
         // copy elements from other array
-        int* new_arr = new int[other.m_size];
+        int* new_arr = new int[other.m_capacity];
         for (int i = 0; i < other.m_size; i++){
             new_arr[i] = other.m_arr[i];
         }
