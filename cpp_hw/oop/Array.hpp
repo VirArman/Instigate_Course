@@ -14,9 +14,12 @@ class Array {
         //Constructor with size argument
         Array(int s);
         //Constructor with size and array argument
-        Array(int s, int a[]);
+        Array(const Array &other);
         //Destructor
         ~Array();
+        bool operator==(const Array& other);
+        bool operator!=(const Array& other);
+        Array& operator=(const Array& other);
         //[] operator overloading
         int& operator[](int index);
         //returns size

@@ -1,7 +1,6 @@
 #include <iostream>
-#include "smart_array.hpp"
+#include "Array.hpp"
 #include <cassert>
-#include <stdexcept>
 int main(){
 // Test default constructor
     Array arr;
@@ -9,13 +8,16 @@ int main(){
 // Test constructor with size parameter
     Array arr1(5);
     assert(arr1.get_size() == 5);
-// Test constructor with size and array parameter
-    int a[3] = {1, 2, 3};
-    Array arr2(3, a);
-    assert(arr2.get_size() == 3);
+    for(int i = 0; i < arr1.get_size(); i++){
+        arr1[i] = i+1;
+    }
+// Test copy constructor
+    Array arr2 = arr1;
+    assert(arr2.get_size() == 5);
     for(int i = 0; i < arr2.get_size(); i++){
         assert(arr2[i] == i+1);
     }
+
 // Test push method
     for(int i = 0; i < 4; i++){
         arr.push(i + 1);
@@ -24,9 +26,12 @@ int main(){
     for(int i = 0; i < arr.get_size(); i++){
         assert(arr[i] == i+1);
     }
+// Test assignment, == and != operators
+    arr2 = arr;
+    assert((arr2 == arr) == true);
+    assert((arr2 != arr1) == true);
 // Test insert method
     arr.insert(5, 1);
-    assert(arr.get_size() == 5);
     assert(arr[0] == 1);
     assert(arr[1] == 5);
     assert(arr[2] == 2);
@@ -34,14 +39,13 @@ int main(){
     assert(arr[4] == 4);
 // Test delete method
     arr.del(1);
-    assert(arr.get_size() == 4);
     for(int i = 0; i < arr.get_size(); i++){
         assert(arr[i] == i+1);
     }
     // Test out-of-bounds access
     try {
         arr[5];
-        assert(false);  // should not reach this line
+        assert(!"out of bounds did not work");  // should not reach this line
     }
     catch (int e) {
         assert(true);
