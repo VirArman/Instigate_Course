@@ -6,6 +6,7 @@ int main(){
     l.push_back(14);
     l.push_back(56);
     l.insert(15,0);
+    l.pop_back();
     l.print();
     std::cout<<l.get_size()<<std::endl;
 }

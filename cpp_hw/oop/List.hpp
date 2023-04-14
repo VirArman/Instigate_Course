@@ -7,10 +7,16 @@ class Node{
         Node(int x);
 };
 class List{
+    private:
+        Node* m_first;
+        int m_size;
     public:
-        Node* first;
         //constructor without argument assignes null to first node
         List();//done
+        //Copy constructor
+        List(const List& other);
+        //Destructor
+        ~List();
         //counts nodes of lists and returnes
         int get_size();//done
         //checks if list is epmty or not
@@ -22,7 +28,7 @@ class List{
         void print();//done
         int& operator[] (int index);//done
         void insert(int data, int position);//done
-        void remove_by_index(int index);
+        int remove_by_index(int index);//done
         void remove_by_value(int data);
-        void pop_back();
+        int pop_back();
 };
