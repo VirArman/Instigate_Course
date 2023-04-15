@@ -10,18 +10,16 @@ Node::Node(int x){
 List::List() : m_first(nullptr), m_size(0) {}
 
 // Copy constructor
-List::List(const List& other) {
-    m_first = new Node(other.m_first->data);
-    Node* current = m_first;
-    Node* other_current = other.m_first->next;
-    while (other_current != nullptr) {
-        current->next = new Node(other_current->data);
-        current = current->next;
-        other_current = other_current->next;
+List::List(const List& other){
+    m_first = nullptr;
+    Node* current = other.m_first;
+    while (current != nullptr){
+        this->push_back(current->data);
+        current = current -> next;
     }
 }
 
-List::~List() {
+List::~List(){
     Node* current = m_first;
     while (current != nullptr) {
         Node* temp = current;
@@ -42,7 +40,6 @@ void List::push_back(int d){
    Node* temp = new Node(d);
    if(is_empty()){
         m_first = temp;
-        m_size++;
    }else{
         Node* n = m_first;
         while (n->next != nullptr){
@@ -88,6 +85,7 @@ void List::insert(int d, int p){
     int count = 0;
     if(p == 0){
         push_front(d);
+        return;
     }
     while (n != nullptr){
         if(count == p-1){
@@ -99,36 +97,38 @@ void List::insert(int d, int p){
         n = n->next;
         count++;
     }
+    throw 1;
 }
 
 int List::remove_by_index(int pos){
-    if(m_size == 0){
+    if (is_empty()) {
         throw 2;
     }
-    if(pos >= m_size && pos < 0){
-        throw 1;
-    }
-    if(pos == m_size-1){
-        pop_back();
-    }
-    int count = 0;
-    Node* temp;
-    Node* n = m_first;
-    while(n != nullptr){
-        if(count == pos-1){
-            temp = n -> next;
-            n -> next = n -> next -> next;
+    if (pos == 0) {
+        Node* temp = m_first;
+        m_first = m_first->next;
+        delete temp;
+    } else {
+        Node* current = m_first;
+        for (int i = 0; i < pos - 1 && current != nullptr; i++) {
+            current = current->next;
         }
-        n = n -> next;
-        count++;
+        if (current == nullptr || current->next == nullptr) {
+            throw 3;
+        }
+        Node* temp = current->next;
+        int deleted = temp->data;
+        current->next = current->next->next;
+        delete temp;
+        return deleted;
     }
-    int deleted = temp->data;
-    delete temp;
-    m_size--;
-    return deleted;
+    return -1;
 }
 
 void List::remove_by_value(int value){
+    if (is_empty()) {
+            throw 2;
+        }
     Node* temp;
     Node* n = m_first;
     Node* prev;
@@ -146,8 +146,8 @@ void List::remove_by_value(int value){
     throw 3;
 }
 int List::pop_back(){
-        if (m_first == NULL) {
-            throw 1;
+        if (is_empty()) {
+            throw 2;
         }
 
         if (m_first->next == NULL) {
