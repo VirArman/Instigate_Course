@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Array.hpp"
+#include "../headers/Array.hpp"
 #include <cassert>
 int main(){
 // Test default constructor

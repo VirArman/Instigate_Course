@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Array.hpp"
+#include "../headers/Array.hpp"
 int* Array::change_capacity(){
 //Creates new array with bigger capacity
 //Copies values from old array to new array
