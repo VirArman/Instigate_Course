@@ -1,3 +1,4 @@
+#include <iostream>
 #include "../headers/stack.hpp"
 
 int main(){
@@ -6,9 +7,7 @@ int main(){
     st.push(132);
     st.push(2456);
     st.push(65);
-    st.peek();
-    st.pop();
-    st.peek();
-    st.pop();
-    st.peek();
+    std::cout<<st.pop()<<std::endl;
+    std::cout<<st.pop()<<std::endl;
+    std::cout<<st.pop()<<std::endl;
 }

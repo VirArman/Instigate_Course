@@ -8,12 +8,13 @@ Node::Node(int x){
 }
 
 
-List::List() : m_first(nullptr), m_size(0) {}
+List::List() : m_head(nullptr), m_tail(nullptr), m_size(0) {}
 
 // Copy constructor
 List::List(const List& other){
-    m_first = nullptr;
-    Node* current = other.m_first;
+    m_head = nullptr;
+    m_size = 0;
+    Node* current = other.m_head;
     while (current != nullptr){
         this->push_back(current->data);
         current = current -> next;
@@ -21,7 +22,7 @@ List::List(const List& other){
 }
 
 List::~List(){
-    Node* current = m_first;
+    Node* current = m_head;
     while (current != nullptr) {
         Node* temp = current;
         current = current->next;
@@ -29,7 +30,10 @@ List::~List(){
     }
 }
 Node* List::get_node(int n){
-    Node* node = m_first;
+    Node* node = m_head;
+    if(n == m_size -1){
+        return m_tail;
+    }
     for(int i=0;i<n;i++){
         node = node->next;
     }
@@ -40,37 +44,39 @@ int List::get_size(){
 }
 
 bool List::is_empty(){
-    return m_first == nullptr;
+    return m_head == nullptr;
 }
 
 void List::push_back(int d){
     Node* temp = new Node(d);
     temp->next = nullptr;
-    if (m_first == nullptr) {
+    if (m_head == nullptr) {
         temp->previous = nullptr;
-        m_first = temp;
+        m_head = temp;
+        m_tail = m_head;
+        m_size++;
         return;
     }
-    Node* last = m_first;
-    while (last->next != nullptr) {
-        last = last->next;
-    }
-    last->next = temp;
-    temp->previous = last;
+    m_tail->next = temp;
+    temp->previous = m_tail;
+    m_tail = temp;
+    m_size++;
 }
 
 void List::push_front(int d){
-    Node* temp = new Node(d);
-    temp->next = m_first;
-    if (m_first != nullptr) {
-        m_first->previous = temp;
+    Node* temp = new Node(d);            
+    if(m_head == nullptr){
+        m_head = m_tail = temp;
+    }else{
+        temp ->next = m_head;
+        m_head-> previous =temp;
+        m_head = temp;
     }
-    m_first = temp;
     m_size++;
 }
 
 void List::print(){
-    Node* n = m_first;
+    Node* n = m_head;
     while (n != nullptr){
         std::cout<<n->data<<" ";
         n = n->next;
@@ -79,7 +85,7 @@ void List::print(){
 }
 
 int& List::operator[](int index){
-    Node* n = m_first;
+    Node* n = m_head;
     int count = 0;
     while (n != nullptr){
         if(count == index){
@@ -94,15 +100,14 @@ int& List::operator[](int index){
 void List::insert(int d, int p){
     Node* newNode = new Node(d);
     if (p == 0) {
-        newNode->previous = nullptr;
-        newNode->next = m_first;
-        if (m_first != nullptr) {
-            m_first->previous = newNode;
-        }
-        m_first = newNode;
+        push_front(d);
         return;
     }
-    Node* temp = m_first;
+    if(p == m_size-1){
+        push_back(d);
+        return;
+    }
+    Node* temp = m_head;
     for (int i = 0; i < p - 1 && temp != nullptr; i++) {
         temp = temp->next;
     }
@@ -112,24 +117,19 @@ void List::insert(int d, int p){
     }
     newNode->previous = temp;
     newNode->next = temp->next;
-    if (temp->next != nullptr) {
-        temp->next->previous = newNode;
-    }
     temp->next = newNode;
 }
 
 int List::remove_by_index(int pos){
-    if (m_first == nullptr) {
+    if (m_head == nullptr) {
         return -1;
     }
-    Node* current = m_first;
+    Node* current = m_head;
     if (pos == 0) {
-        m_first = current->next;
-        if (m_first != nullptr) {
-            m_first->previous = nullptr;
-        }
-        delete current;
-        return 0;
+        return pop_front();
+    }
+    if(pos == m_size-1){
+        return pop_back();
     }
     for (int i = 0; current != nullptr && i < pos - 1; i++) {
         current = current->next;
@@ -138,23 +138,25 @@ int List::remove_by_index(int pos){
         return -1;
     }
     Node* next = current->next->next;
+    int value = current->next->data;
     delete current->next;
     current->next = next;
     if (next != nullptr) {
         next->previous = current;
     }
-    return -1;
+    return value;
 }
 
 void List::remove_by_value(int value){
-    if (m_first == nullptr) {
+    if (m_head == nullptr) {
         return;
     }
-    Node* temp = m_first;
+    Node* temp = m_head;
     if (temp != nullptr && temp->data == value) {
-        m_first = temp->next;
-        m_first->previous = nullptr;
+        m_head = temp->next;
+        m_head->previous = nullptr;
         delete temp;
+        m_size--;
         return;
     }
     while (temp != nullptr && temp->data != value) {
@@ -168,27 +170,37 @@ void List::remove_by_value(int value){
         temp->next->previous = temp->previous;
     }
     delete temp;
+    m_size--;
 }
 
 int List::pop_back(){
-        if (is_empty()) {
-            throw 2;
-        }
+    if (is_empty()) {
+        throw 2;
+    }
 
-        if (m_first->next == nullptr) {
-            int value = m_first -> data;
-            delete m_first;
-            m_first = nullptr;
-            return value;
-        }
-
-        Node* curr = m_first;
-        while (curr->next->next != nullptr) {
-            curr = curr->next;
-        }
-        int value = curr -> data;
-        delete curr->next;
-        curr->next = nullptr;
+    if (m_head->next == nullptr) {
+        int value = m_head -> data;
+        delete m_head;
+        m_head = nullptr;
         m_size--;
         return value;
+    }
+
+    int value = m_tail -> data;
+    m_tail = m_tail -> previous;
+    delete m_tail->next;
+    m_tail->next = nullptr;
+    m_size--;
+    return value;
+}
+
+int List::pop_front(){
+    int value = m_head->data;
+    m_head = m_head -> next;
+    if(m_head != nullptr){
+        m_head->previous = nullptr;
+    }
+    delete m_head->previous;
+    m_size--;
+    return value;
 }

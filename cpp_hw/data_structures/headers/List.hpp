@@ -13,7 +13,8 @@ class List{
         //keeps size of the list
         int m_size;
         //keeps address of the first node
-        Node* m_first;
+        Node* m_head;
+        Node* m_tail;
     public:
         //constructor without argument assignes null to first node
         List();
@@ -56,4 +57,5 @@ class List{
         
         //removes the last node of list and returnes value of that node
         int pop_back();
+        int pop_front();
 };
