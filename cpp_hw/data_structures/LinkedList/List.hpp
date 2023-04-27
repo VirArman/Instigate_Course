@@ -123,7 +123,7 @@ class List{
 
         //adds node at the specefic position by traversing the list
         void insert(T d, int p){
-            assert(p < 0 || p >= m_size);
+            assert(!(p < 0 || p >= m_size));
             Node<T>* newNode = new Node<T>(d);
             if (p == 0) {
                 push_front(d);
@@ -144,8 +144,8 @@ class List{
 
         //removes by traversing list untill "index" position
         T remove_by_index(int pos){
-            assert(pos < 0 || pos >= m_size);
-            assert(m_head == nullptr);
+            assert(!(pos < 0 || pos >= m_size));
+            assert(m_head != nullptr);
             Node<T>* current = m_head;
             if (pos == 0) {
                 return pop_front();
@@ -183,7 +183,7 @@ class List{
             while (temp != nullptr && temp->data != value) {
                 temp = temp->next;
             }
-            assert(temp == nullptr);
+            assert(temp != nullptr);
             temp->previous->next = temp->next;
             if (temp->next != nullptr) {
                 temp->next->previous = temp->previous;
@@ -194,7 +194,7 @@ class List{
 
         //removes the last node of list and returnes value of that node
         T pop_back(){
-            assert(is_empty());
+            assert(!is_empty());
 
             if (m_head->next == nullptr) {
                 T value = m_head -> data;
@@ -211,6 +211,7 @@ class List{
             m_size--;
             return value;
         }
+        //removes the first node of list and returnes value of that node
         T pop_front(){            
             assert(is_empty());
             T value = m_head->data;
@@ -221,5 +222,16 @@ class List{
             delete m_head->previous;
             m_size--;
             return value;
+        }
+        //Turning list backwords
+        void reverse(){
+            Node<T>* current_node = m_head;
+            while (current_node != NULL) {
+                Node<T>* temp_node = current_node->next;
+                current_node->next = current_node->previous;
+                current_node->previous = temp_node;
+                m_head = current_node;
+                current_node = temp_node;
+            }
         }
 };
