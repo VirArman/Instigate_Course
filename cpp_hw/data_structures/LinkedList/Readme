@@ -1,0 +1,100 @@
+Program Description:
+C++ Doubly Linked List implementation
+This C++ program provides an implementation of a doubly linked list that can be used for storing and manipulating data. The implementation includes the List class, which contains methods for adding, removing, and accessing elements in the list.
+
+Usage:
+
+The List class can be used as follows:
+Create a new list
+
+List<int> myList: This creates a new list called myList.
+Add elements to the list:
+myList.push_back(element); 
+myList.push_front(2);
+myList.insert(3, 1);
+This adds the elements 1, 2, and 3 to the list. push_back adds an element to the end of the list, push_front adds an element to the beginning of the list, and insert adds an element at the specified index.
+
+Remove elements from the list
+
+myList.remove_by_value(2);
+myList.remove_by_index(1);
+This removes the element with the value 2 from the list, and the element at index 1 from the list.
+
+Access elements in the list
+int element = myList[0];
+This retrieves the element at index 0 in the list.
+
+Copy the list
+List<int> newList = myList;
+This creates a new list called newList that contains the same elements as myList.
+
+Class Methods
+List()
+The constructor for the List class. Initializes the list to be empty.
+
+List(const List& other)
+The copy constructor for the List class. Creates a new list with the same elements as the provided list.
+
+~List()
+The destructor for the List class. Removes all elements from the list.
+
+Node<T>* get_node(int n)
+Returns the Node object at the specified index in the list.
+
+int get_size()
+Returns the size of the list.
+
+bool is_empty()
+Returns true if the list is empty, false otherwise.
+
+void push_back(T d)
+Adds an element with value d to the end of the list.
+
+void push_front(T d)
+Adds an element with value d to the beginning of the list.
+
+void print()
+Prints the contents of the list.
+
+T& operator[](int index)
+Returns a reference to the element at the specified index in the list.
+
+void insert(T d, int p)
+Adds an element with value d at the specified index in the list.
+
+T remove_by_index(int pos)
+Removes the element at the specified index in the list and returns its value.
+
+void remove_by_value(T value)
+Removes the element with the specified value from the list.
+
+How To Build Program:
+Usage:
+1.Open the terminal and navigate to the directory where the Makefile is located.
+2.Run make command to build the executable file. The output file will be named List.
+3.Run make test command to build and run the executable file. This will execute the program and display the output on the terminal.
+4.Run make clean command to remove all object files, dependency files, and the executable file.
+5.Run make clear command to remove all object files and dependency files only.
+
+About Makefile:
+This Makefile is used to build an executable file called List using gcc compiler.
+Variables
+The following variables are defined in this Makefile:
+
+EXE_FILE: name of the executable file to be built, which is set to List.
+SOURCE_FILES: list of source code files that ends with .cpp extension. It uses wildcard function to automatically find all source files in the current directory.
+DEP_FOLDER: name of the folder where dependency files will be stored. It is set to DEPS.
+OBJ_FILES: list of object files that will be generated from source files. It uses patsubst function to substitute .cpp extension with .o.
+DEP_FILES: list of dependency files that will be generated from source files. It uses patsubst function to substitute .cpp extension with .dep and adds DEPS/ prefix to specify the folder where dependency files will be stored.
+Rules
+The following rules are defined in this Makefile:
+
+$(EXE_FILE): depends on all object files and builds the executable file using gcc compiler with -lm and -lstdc++ flags to link math library and C++ standard library. The output file is named after EXE_FILE variable.
+%.o: builds object files from corresponding source files using gcc compiler with -c flag to compile only without linking.
+$(DEP_FOLDER)/%.dep: generates dependency files for corresponding source files using gcc -M command. It creates the dependency file in the DEP_FOLDER directory.
+.PHONY: clean: cleans all object files, dependency files, and executable file using rm -rf command.
+clear: cleans all object files and dependency files using rm -rf command.
+.PHONY: test: builds the executable file and runs it using ./$(EXE_FILE) command.
+Other Notes
+The ifneq condition checks if the MAKECMDGOALS variable does not contain clean. If it is true, the DEP_FILES will be included with the -include directive to avoid errors caused by missing dependency files.
+It is recommended to run make clean before running make to ensure a clean build.
