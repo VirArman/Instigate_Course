@@ -123,13 +123,13 @@ class List{
 
         //adds node at the specefic position by traversing the list
         void insert(T d, int p){
-            assert(!(p < 0 || p >= m_size));
+            assert(!(p < 0 || p > m_size));
             Node<T>* newNode = new Node<T>(d);
             if (p == 0) {
                 push_front(d);
                 return;
             }
-            if(p == m_size-1){
+            if(p == m_size){
                 push_back(d);
                 return;
             }
