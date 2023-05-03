@@ -10,7 +10,8 @@ int main(){
     l.push_back(4);
     l.print();
     //l.bubble_sort();
-    l.insertion_sort();
+    //l.insertion_sort();
+    l.quick_sort();
     l.print();
     List l2 = l;
     l2.pop_back();

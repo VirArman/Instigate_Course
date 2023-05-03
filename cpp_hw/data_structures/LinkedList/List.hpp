@@ -22,6 +22,31 @@ class List{
     //keeps address of the first Node
     Node<T>* m_head;
     Node<T>* m_tail;
+
+    Node<T>* partition(Node<T>* left, Node<T>* right) {
+        T pivotValue = right->data;
+        Node<T>* i = left->previous;
+
+        for (Node<T>* j = left; j != right; j = j->next) {
+            if (j->data <= pivotValue) {
+                i = (i == nullptr) ? left : i->next;
+                std::swap(i->data, j->data);
+            }
+        }
+        i = (i == nullptr) ? left : i->next;
+        std::swap(i->data, right->data);
+        
+        return i;
+    }
+    void quicksort(Node<T>* left, Node<T>* right) {
+        if (left == nullptr || right == nullptr || left == right || left->previous == right) {
+            return;
+        }
+        
+        Node<T>* pivot = partition(left, right);
+        quicksort(left, pivot->previous);
+        quicksort(pivot->next, right);
+    }
     public:
     //constructor without argument assignes null to first node
     List() : m_head(nullptr), m_tail(nullptr), m_size(0) {}
@@ -279,5 +304,9 @@ class List{
             }
             current = current->next;
             }
-        }  
+    }
+
+    void quick_sort(){
+        quicksort(m_head,m_tail);
+    }
 };
