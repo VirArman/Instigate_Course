@@ -31,4 +31,7 @@ class ControlUnit{
                     break;
             }
         }
+        void print(){
+            ram.print();
+        }
 };

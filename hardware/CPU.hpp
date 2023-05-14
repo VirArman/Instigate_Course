@@ -6,7 +6,7 @@ class CPU{
         int r2;// stores address where to store result of instructions
         int r3;// stores address of first operand 
         int r4;// stores address of second operand
-        int PC;// stores address of the next instruction
+        int PC = 0;// stores address of the next instruction
         ControlUnit CU;
     public:
         void load(int instruction){
@@ -22,5 +22,7 @@ class CPU{
             CU.store(CU.execute(r1,r3,r4),r2);
             PC++;
         }
-
+        void print(){
+            CU.print();
+        }
 };

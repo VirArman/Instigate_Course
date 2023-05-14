@@ -1,4 +1,5 @@
 #include <vector>
+#include <iostream>
 class Memory{
     private:
         std::vector<int> ram;
@@ -14,5 +15,10 @@ class Memory{
         }
         int read(int address){
             return ram[address];
+        }
+        void print(){
+            for(int i = 0; i < ram.size();i++){
+                std::cout<<ram[i]<<"\n";
+            }
         }
 };
