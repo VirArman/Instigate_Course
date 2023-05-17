@@ -13,6 +13,6 @@ class Registers{
             registers[index] = data;
         }
         int read(int index){
-            return index;
+            return registers[index];
         }
 };

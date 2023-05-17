@@ -1,12 +1,11 @@
-#include "Memory.hpp"
 class ControlUnit{
     private:
         ALU alu;
-        Memory ram;
+        Memory* ram;
     public:
         ControlUnit(){}
         ControlUnit(Memory& ram){
-            this->ram = ram;
+            this->ram = &ram;
         }
         ControlUnit& operator=(const ControlUnit& other) {
             if (this != &other) {
@@ -16,9 +15,9 @@ class ControlUnit{
                 ram = other.ram;
             }
             return *this;
-    }
+        }
         int fetch(int address){
-            return ram.read(address);
+            return ram->read(address);
         }
         
         int* decode(int code){
@@ -29,8 +28,8 @@ class ControlUnit{
             }
             return res;
         }
-        int execute(Registers& regs){
-           return alu.execute(regs);
+        void execute(Registers& regs){
+           ram->rewrite(alu.execute(regs,ram),regs.read(1));
         }
         
 };

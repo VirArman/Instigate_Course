@@ -1,18 +1,19 @@
 class CPU{
     private:
         Registers regs;
-        Memory ram;
+        Memory* ram;
         ControlUnit CU;
     public:
         CPU(Memory& ram){
-            this->ram = ram;
+            this->ram = &ram;
+            CU =  ControlUnit(ram);
         }
         void load(int instruction){
-            ram.rewrite(instruction,regs.read(5));
+            ram->rewrite(instruction,regs.read(5));
             regs.write(regs.read(5)+1,5);
         }
         void store(int data, int address){
-            ram.rewrite(data,address);
+            ram->rewrite(data,address);
         }
         void execute(){
            int instruction = CU.fetch(regs.read(4));
