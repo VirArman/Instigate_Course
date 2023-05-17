@@ -16,12 +16,13 @@ class CPU{
             ram->rewrite(data,address);
         }
         void execute(){
-           int instruction = CU.fetch(regs.read(4));
-           int* decoded = CU.decode(instruction);
-           for (int i = 0; i < 4; i++){
+            int instruction = CU.fetch(regs.read(4));
+            int* decoded = CU.decode(instruction);
+            for (int i = 0; i < 4; i++){
                 regs.write(decoded[i],i);
-           }
-           CU.execute(regs);
+            }
+            CU.execute(regs);
+            regs.write(regs.read(4)+1,4);
         }
         
 };
