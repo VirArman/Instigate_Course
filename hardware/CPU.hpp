@@ -1,28 +1,26 @@
-#include "ControlUnit.hpp"
-
 class CPU{
     private:
-        int r1;// stores operation to use
-        int r2;// stores address where to store result of instructions
-        int r3;// stores address of first operand 
-        int r4;// stores address of second operand
-        int PC = 0;// stores address of the next instruction
+        Registers regs;
+        Memory ram;
         ControlUnit CU;
     public:
+        CPU(Memory& ram){
+            this->ram = ram;
+        }
         void load(int instruction){
-            CU.load(instruction);
+            ram.rewrite(instruction,regs.read(5));
+            regs.write(regs.read(5)+1,5);
+        }
+        void store(int data, int address){
+            ram.rewrite(data,address);
         }
         void execute(){
-            int instruction = CU.fetch(PC);
-            int* decoded = CU.decode(instruction);
-            r1 = decoded[0];
-            r2 = decoded[1];
-            r3 = decoded[2];
-            r4 = decoded[3];
-            CU.store(CU.execute(r1,r3,r4),r2);
-            PC++;
+           int instruction = CU.fetch(regs.read(4));
+           int* decoded = CU.decode(instruction);
+           for (int i = 0; i < 4; i++){
+                regs.write(decoded[i],i);
+           }
+           CU.execute(regs);
         }
-        void print(){
-            CU.print();
-        }
+        
 };
